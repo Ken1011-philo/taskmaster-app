@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import "./FocusTimer.css"; // ✅ 追加
 
 const FocusTimer: React.FC = () => {
   const TOTAL_TIME = 25 * 60;
@@ -29,11 +30,11 @@ const FocusTimer: React.FC = () => {
   const percentage = ((TOTAL_TIME - timeLeft) / TOTAL_TIME) * 100;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-md w-80 text-center">
-        <h2 className="text-lg font-semibold mb-6">{taskName}</h2>
+    <div className="focus-container">
+      <div className="timer-card">
+        <h2 className="task-title">{taskName}</h2>
 
-        <div className="w-48 h-48 mx-auto mb-6">
+        <div className="circle-wrapper">
           <CircularProgressbar
             value={percentage}
             text={formatTime(timeLeft)}
@@ -46,29 +47,29 @@ const FocusTimer: React.FC = () => {
           />
         </div>
 
-        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+        <div className="progress-bar-container">
           <div
-            className="bg-blue-500 h-2.5 rounded-full"
+            className="progress-bar-fill"
             style={{ width: `${percentage}%` }}
           ></div>
         </div>
 
-        <div className="flex justify-between">
+        <div className="button-group">
           <button
             onClick={() => setIsRunning(false)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+            className="btn btn-pause"
           >
             一時停止
           </button>
           <button
             onClick={() => navigate("/")}
-            className="text-gray-600 px-4 py-2 rounded-full hover:bg-gray-100"
+            className="btn btn-neutral"
           >
             終了
           </button>
           <button
             onClick={() => setIsRunning(true)}
-            className="text-gray-600 px-4 py-2 rounded-full hover:bg-gray-100"
+            className="btn btn-neutral"
           >
             再開
           </button>
