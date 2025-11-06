@@ -1,0 +1,93 @@
+:root{
+  --bg-grad-top:#ffffff;
+  --bg-grad-bottom:#f6f7f9;
+  --text:#0f172a;
+  --muted:#64748b;
+  --panel-alpha:0.95;
+  --panel-shadow:0 12px 40px rgba(2,6,23,.08);
+  --skel:#e5e7eb;
+  --track:#eef2f7;
+  --fill:#3b82f6;
+}
+
+*{ box-sizing:border-box; }
+html,body,#root{ height:100%; }
+html,body{
+  margin:0;
+  font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+}
+
+/* ---- レイアウト ---- */
+.page{
+  min-height:100dvh;
+  background:linear-gradient(to bottom,var(--bg-grad-top),var(--bg-grad-bottom));
+}
+.container{
+  width:100%;
+  max-width:1120px;
+  margin:0 auto;
+  padding:0 24px;
+}
+.main{
+  padding:64px 0 96px;
+}
+
+/* ---- 中央カード（Skeleton） ---- */
+.nowcard{ margin-top:48px; }
+.nowcard__inner{
+  margin:0 auto;
+  max-width:768px;
+  background:rgba(255,255,255,var(--panel-alpha));
+  border-radius:28px;
+  box-shadow:var(--panel-shadow);
+  padding:40px 36px;
+  display:flex; flex-direction:column; align-items:center; gap:24px;
+}
+
+.skel{ background:var(--skel); border-radius:10px; }
+
+.nowcard__title{ height:38px; width:360px; max-width:80%; }
+.nowcard__subtitle{ height:18px; width:460px; max-width:90%; }
+
+.nowcard__progress{ width:100%; }
+.progress__track{
+  height:10px; width:100%;
+  border-radius:999px; background:var(--track);
+  position:relative; overflow:hidden;
+}
+.progress__fill{
+  position:absolute; left:0; top:0; bottom:0;
+  width:32%;
+  background:var(--fill);
+  border-radius:999px;
+}
+.progress__value{
+  margin-top:8px; margin-left:auto;
+  height:14px; width:40px;
+  border-radius:6px;
+}
+
+.nowcard__buttons{
+  width:100%;
+  display:flex; flex-wrap:wrap; gap:16px;
+  justify-content:center;
+}
+.btn--lg{ height:52px; width:240px; border-radius:999px; }
+.btn--md{ height:52px; width:150px; border-radius:999px; }
+
+/* ---- 今日の記録 ---- */
+.today{ margin-top:56px; text-align:center; }
+.today__heading{
+  color:var(--muted);
+  font-size:12px; letter-spacing:2px; font-weight:700;
+  margin-bottom:16px;
+}
+.today__grid{
+  display:grid; gap:28px; grid-template-columns:1fr;
+  max-width:720px; margin:0 auto;
+}
+@media (min-width: 600px){
+  .today__grid{ grid-template-columns: repeat(3, 1fr); }
+}
+.today__value{ font-size:20px; font-weight:700; }
