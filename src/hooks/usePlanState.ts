@@ -25,11 +25,10 @@ const defaultState: PlanState = {
   ],
 };
 
-// unknown を受け取って、中身をチェックしながら PlanState に寄せる
+// localStorage から読んだ unknown を PlanState に寄せる
 function normalize(raw: unknown): PlanState {
   if (!raw || typeof raw !== "object") return defaultState;
 
-  // goalTitle, subgoals だけを扱う「ゆるい型」にしておく
   const rawPlan = raw as {
     goalTitle?: unknown;
     subgoals?: unknown;
@@ -77,26 +76,25 @@ function normalize(raw: unknown): PlanState {
 }
 
 export function usePlanState() {
-  const [plan, setPlan] = useState<PlanState>(defaultState);
+  // ★ 初回レンダー時に一度だけ localStorage から読む
+  const [plan, setPlan] = useState<PlanState>(() => {
+    if (typeof window === "undefined") return defaultState; // SSR対策（Viteならほぼ不要だけど保険）
 
-  // load
-  useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-
-      const parsed: unknown = JSON.parse(raw); // ← any ではなく unknown
-      setPlan(normalize(parsed));
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState;
+      const parsed: unknown = JSON.parse(raw);
+      return normalize(parsed);
     } catch (e) {
-      // e の型は TS 的には unknown だが、そのままログに流すだけならこれでOK
       console.warn("Failed to load plan from localStorage", e);
+      return defaultState;
     }
-  }, []);
+  });
 
-  // save
+  // ★ plan が変わったときだけ保存する
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(plan));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(plan));
     } catch (e) {
       console.warn("Failed to save plan to localStorage", e);
     }
