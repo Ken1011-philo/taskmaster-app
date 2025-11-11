@@ -13,11 +13,11 @@ const defaultState: PlanState = {
   subgoals: [
     {
       id: createId(),
-      title: "サブゴール 1",
+      title: "",
       tasks: [
         {
           id: createId(),
-          title: "最初のタスク",
+          title: "",
           done: false,
         },
       ],
@@ -110,7 +110,7 @@ export function usePlanState() {
         ...prev.subgoals,
         {
           id: createId(),
-          title: `サブゴール ${prev.subgoals.length + 1}`,
+          title: "",
           tasks: [],
         },
       ],
