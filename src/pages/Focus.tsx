@@ -3,6 +3,7 @@ import { Button } from "../components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import "./focus.css";
 
 export default function Focus() {
   // ======== タイマー用のステート ========
