@@ -66,23 +66,27 @@ export default function Focus() {
           </div>
 
           <div className="button-group mt-4 flex gap-2 justify-center">
-            <Button
-              variant="secondary"
-              onClick={() => setIsRunning(false)}
-            >
-              一時停止
-            </Button>
+
             <Button
               variant="destructive"
               onClick={() => navigate("/")}
             >
-              終了
+              中断
             </Button>
-            <Button
-              onClick={() => setIsRunning(true)}
+
+            <Button className="buttonRestart"
+              variant="secondary"
+              onClick={() => setIsRunning(!isRunning)}
             >
-              再開
+              {isRunning ? "一時停止" : "再開"}
             </Button>
+
+            <Button
+              onClick={() => navigate("/")}
+            >
+              完了
+            </Button>
+            
           </div>
         </div>
       </div>
